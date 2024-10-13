@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Models\Project;
 use App\Models\Type;
+use App\Models\Technology;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Http\Controllers\Controller;
@@ -32,7 +33,8 @@ class ProjectController extends Controller
     public function create()
     {
         $types = Type::all();
-        return view('admin.projects.create', compact('types'));
+        $technologies = Technology::all();
+        return view('admin.projects.create', compact('types', 'technologies'));
     }
 
     /**
@@ -52,6 +54,11 @@ class ProjectController extends Controller
         if($request->hasFile('image_path')) {
             $path = Storage::disk('public')->put('image_path', $validatedData['image_path']);
             $validatedData['image_path'] = $path;
+        }
+
+        if($request->has('technologies')) {
+            $project = Project::create($validatedData);
+            $project->technologies()->attach($request->technologies);
         }
         
         // Crea il progetto con lo slug
