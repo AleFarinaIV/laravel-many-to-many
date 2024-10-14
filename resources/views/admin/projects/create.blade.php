@@ -83,7 +83,7 @@
                             <div class="form-group d-flex flex-wrap">
                                 @foreach ($technologies as $tech)
                                     <div class="form-check mx-2">
-                                        <input type="checkbox" name="technolgies[]" 
+                                        <input type="checkbox" name="technologies[]" 
                                         id="" class="form-check-input"value="{{ $tech->id }}" 
                                         {{ is_array(old('technologies')) && in_array($tech->id), old('technologies') ? 'checked' : '' }}>
                                         <label class="form-check-label">{{ $tech->name }}</label>

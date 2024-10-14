@@ -56,13 +56,14 @@ class ProjectController extends Controller
             $validatedData['image_path'] = $path;
         }
 
+        // Crea il progetto
+        $project = Project::create($validatedData);
+
+
         if($request->has('technologies')) {
-            $project = Project::create($validatedData);
             $project->technologies()->attach($request->technologies);
         }
         
-        // Crea il progetto con lo slug
-        Project::create($validatedData);
         return redirect()->route('admin.projects.index')->with('success', 'Project created successfully');
     }
 
